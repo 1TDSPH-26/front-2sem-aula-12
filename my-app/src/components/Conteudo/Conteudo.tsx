@@ -1,19 +1,39 @@
+
 import { useState } from "react";
 import imgQuadrada from "../../img/quadrado.png";
 
 export default function Conteudo() {
 
-  const [mostraSecao, setMostraSecao] = useState(false);
+  let nome: string | null = "Alê";
 
-  const alternaSecao = () => {
+  const [nomeState, setNomeState] = useState<string | null>("Joel");
 
-    setMostraSecao(!mostraSecao);
-    console.log(mostraSecao);
+  function alteraNome() {
+    nome = prompt("Digite o novo nome : ");
+    console.log("Nome digitado: ", nome);
   }
 
+  function alteraState() {
+    const nome: string | null = prompt("digite seu nome:")
+    setNomeState((nomeStateAnterior) => nomeStateAnterior = nome);
+    console.log("Nome digitado: ", nomeState);
+
+    
+
+
+
+  }
 
   return (
     <main>
+      <div>
+        <p>Nome : {nome}</p>
+        <button onClick={alteraNome}>Nome = {nome}</button>
+      </div>
+      <div>
+        <p>Nome State: {nomeState}</p>
+        <button onClick={alteraState}>Nome = {nomeState}</button>
+      </div>
       <section>
         <h2>Conteúdo Básico</h2>
         <p>
@@ -51,7 +71,7 @@ export default function Conteudo() {
         <h2>Especial</h2>
         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus, vitae recusandae? Inventore impedit earum nisi reiciendis provident autem cum aliquam natus excepturi ut distinctio, laborum veritatis, veniam fugiat exercitationem quam iusto accusantium culpa reprehenderit quas quibusdam. Nulla, quibusdam cumque? Quibusdam dolorum dolore deserunt. Assumenda eos voluptatibus dolores eaque fugit quod?</p>
       </section>
-      <button onClick={alternaSecao}>{mostraSecao ? "ESCONDER" : "MOSTRAR"}</button>
+
     </main>
   );
 }
