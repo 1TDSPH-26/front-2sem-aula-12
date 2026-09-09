@@ -1,12 +1,10 @@
-import { Link } from 'react-router'
+
+import Menu from '../Menu/Menu'
 
 export default function Cabecalho(){
     return (
-<nav>
-    <ul>
-        <li><Link to="/">Home</Link></li>
-        <li><Link to="/produtos">Produtos</Link></li>
-        <li><Link to="/editar-produtos">Editar Produtos</Link></li>
-    </ul>
-</nav>
-  )}
+        <header>
+            <h1>Meu Boiler-Plate</h1>
+            <Menu/>
+        </header>
+)}
