@@ -1,4 +1,5 @@
 export default function Error(){
+    document.title = "Error"
     return(
         <main>
             <h2>Error - 404</h2>
