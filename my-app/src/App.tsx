@@ -1,12 +1,14 @@
+import { Outlet } from 'react-router'; // 1. Importe o Outlet
 import Cabecalho from "./components/Cabecalho/Cabecalho";
-import Conteudo from "./components/Conteudo/Conteudo";
+// 2. Apague a importação do Conteudo
 import Rodape from "./components/Rodape/Rodape";
 
 export default function App() {
   return (
     <div>
       <Cabecalho />
-      <Conteudo/>
+      {/* 3. Troque o <Conteudo /> pelo <Outlet /> */}
+      <Outlet /> 
       <Rodape/>
     </div>
   )
