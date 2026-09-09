@@ -2,8 +2,8 @@
 
 export default function Error() {
     return (
-        <div>
+        <main>
             <p>Error</p>
-        </div>
+        </main>
     )
 }

@@ -2,8 +2,8 @@
 
 export default function Produtos() {
     return (
-        <div>
+        <main>
             <p>produtos</p>
-        </div>
+        </main>
     )
 }
