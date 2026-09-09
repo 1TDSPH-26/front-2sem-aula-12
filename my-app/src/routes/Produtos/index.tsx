@@ -1,3 +1,8 @@
 export default function Produtos() {
-  return <h1>Produtos</h1>;
+ document.title = "Produtos";
+          return(
+          <main>
+                    <h2>Produtos</h2>
+          </main>
+  )
 }
