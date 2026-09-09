@@ -3,7 +3,7 @@
 export default function EditarProdutos(){
     return(
         <main>
-            <p>Editar produtos</p>
+            <h2>Editar Produtos</h2>
         </main>
     )
 }
