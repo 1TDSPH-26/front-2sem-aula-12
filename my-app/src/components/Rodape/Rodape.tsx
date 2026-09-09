@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 
 export default function Rodape() {
   return (
@@ -6,3 +7,12 @@ export default function Rodape() {
     </footer>
   )
 }
+=======
+export default function Rodape(){
+    return(
+       <footer>
+            <p>&copy;Todos os direitos reservados.</p>
+       </footer>
+    );
+}
+>>>>>>> 3ef486014811e7917ce0b38da4a92a6eac8a9519

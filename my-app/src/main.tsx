@@ -2,6 +2,7 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import App from './App.tsx'
 
+<<<<<<< HEAD
 import { createBrowserRouter, RouterProvider } from 'react-router';
 import Home from './routes/Home/index.tsx';
 import Produtos from './routes/Produtos/index.tsx';
@@ -20,5 +21,10 @@ const router = createBrowserRouter([
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <RouterProvider router={router} />
+=======
+createRoot(document.getElementById('root')!).render(
+  <StrictMode>
+    <App />
+>>>>>>> 3ef486014811e7917ce0b38da4a92a6eac8a9519
   </StrictMode>,
 )
