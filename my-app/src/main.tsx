@@ -1,5 +1,6 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
+<<<<<<< HEAD
 
 // Passo 5: Importando as ferramentas do React Router
 import { createBrowserRouter, RouterProvider } from 'react-router'
@@ -32,3 +33,14 @@ createRoot(document.getElementById('root')!).render(
     <RouterProvider router={router} />
   </StrictMode>,
 )
+=======
+import App from './App.tsx'
+
+createRoot(document.getElementById('root')!).render(
+  <StrictMode>
+    <App />
+  </StrictMode>,
+)
+
+
+>>>>>>> 61c27dd30471a42e29beceb8e9d990298b060df3
