@@ -1,3 +1,4 @@
+import { Link } from "react-router";
 
 
 export default function Cabecalho() {
@@ -8,9 +9,9 @@ export default function Cabecalho() {
             <h1>E-commerce</h1>
             <nav>
                 <ul>
-                    <li><a href="">Home</a></li>
-                    <li><a href="">FAQ</a></li>
-                    <li><a href="">Contato</a></li>
+                    <li><Link to="/">Home</Link></li>
+                    <li><Link to="/editar-produtos">Editar Produtos</Link></li>
+                    <li><Link to="/produtos">Produtos</Link></li>
                 </ul>
             </nav>
         </header>
