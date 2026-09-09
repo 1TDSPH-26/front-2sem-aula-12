@@ -1,14 +1,12 @@
+import { Link } from 'react-router'
+
 export default function Cabecalho(){
-    return(
-        <header>
-            <h1>Meu boiler plate</h1>
-            <nav>
-                <ul>
-                    <li>item 1</li>
-                    <li>item 2</li>
-                    <li>item 3</li>
-                </ul>
-            </nav>
-        </header>
-    )
-}
+    return (
+<nav>
+    <ul>
+        <li><Link to="/">Home</Link></li>
+        <li><Link to="/produtos">Produtos</Link></li>
+        <li><Link to="/editar-produtos">Editar Produtos</Link></li>
+    </ul>
+</nav>
+  )}
