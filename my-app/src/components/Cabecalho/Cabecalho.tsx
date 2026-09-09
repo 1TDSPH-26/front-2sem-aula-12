@@ -1,8 +1,14 @@
-export default function Cabecalho(){
-
-    return(
+export default function Cabecalho() {
+    return (
         <header>
-            <h1>Cabeçalho</h1>
+            <h1>Meu Boiler Plate</h1>
+            <nav>
+                <ul>
+                    <li>Item-1</li>
+                    <li>Item-1</li>
+                    <li>Item-1</li>
+                </ul>
+            </nav>
         </header>
-    );
+    )
 }
