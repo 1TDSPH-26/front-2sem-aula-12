@@ -1,3 +1,5 @@
+import Menu from "../Menu/Menu";
+
 export default function Cabecalho(){
 
     return(
@@ -6,14 +8,7 @@ export default function Cabecalho(){
                 <h1>
                     Cabeçalho
                 </h1>
-                <nav>
-                    <ul>
-                        <li>Item-1</li>
-                        <li>Item-2</li>
-                        <li>Item-3</li>
-
-                    </ul>
-                </nav>
+                <Menu/>
             </header>
         </div>
     );
