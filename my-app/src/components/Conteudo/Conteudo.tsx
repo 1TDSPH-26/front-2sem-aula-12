@@ -4,7 +4,7 @@ import imgQuadrada from "../../img/quadrado.png";
 
 export default function Conteudo() {
 
-  let nome: string | null = "Alê";
+  let nome: string | null = "Italo";
 
   const [nomeState, setNomeState] = useState<string | null>("Joel");
 
