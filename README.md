@@ -1,3 +1,467 @@
+----
+=============================
+----
+
+# Guia de Configuração e Execução do Projeto
+
+Siga o passo a passo abaixo para clonar, configurar o ambiente com Git Flow e executar o projeto localmente.
+
+---
+
+### 1. Clonar o repositório
+```bash
+git clone <endereço-remoto-repositorio>
+```
+
+### 2. Verificar branches locais
+```bash
+git branch
+```
+
+### 3. Verificar branches remotas
+```bash
+git branch -a
+```
+
+### 4. Inicializar a estrutura do Git Flow
+Inicia a estrutura do Git Flow no projeto e muda automaticamente para a branch `develop`:
+```bash
+git flow init
+```
+
+> **Atenção (PC da Instituição):** Caso o Git Flow não esteja instalado no Windows, execute:
+> ```bash
+> winget install GitTower.GitFlowNext
+> ```
+
+### 5. Mudar para a branch de trabalho desejada
+```bash
+git switch <nomeDaBranch>
+# ou
+git checkout <nomeDaBranch>
+```
+
+### 6. Acessar a pasta da aplicação
+```bash
+cd my-app
+```
+
+### 7. Listar o conteúdo da pasta atual
+```bash
+ls
+```
+
+### 8. Abrir o VS Code a partir do Git Bash
+```bash
+code .
+```
+
+### 9. Encerrar o Git Bash
+```bash
+exit
+```
+
+### 10. Abrir o terminal no VS Code e instalar dependências
+No VS Code, abra um novo terminal usando o **Command Prompt (CMD)** e instale as dependências:
+```bash
+npm install
+# ou
+npm i
+```
+> **Atenção:** Certifique-se de que o terminal está dentro da pasta `my-app`.
+
+### 11. Executar o projeto em modo de desenvolvimento
+```bash
+npm run dev
+```
+---
+# Guia de Sincronização de Branches com o Professor
+
+Se o seu código está diferente ou você não tem o conteúdo atual do professor, identifique sua situação e siga os passos correspondentes abaixo.
+
+---
+
+### 1. Acabou de clonar o repositório OU ainda não criou sua branch
+*(Você não tem branch de trabalho e precisa começar exatamente do ponto onde o professor parou)*
+
+1. Atualize a lista de branches do servidor:
+```bash
+git fetch origin
+```
+
+2. Crie a sua branch diretamente a partir da branch do professor:
+```bash
+git switch -c feature/exemplo-rmSeuRM origin/feature/exemplo-pf0670
+```
+> Substitua `rmSeuRM` pelo seu RM real (ex: `feature/exemplo-rm12345`).
+
+---
+
+### 2. Você já tem a sua branch criada, mas o código está desatualizado
+*(Você tem sua branch, mas falta o conteúdo que o professor acabou de passar na aula)*
+
+1. Acesse a sua branch:
+```bash
+git switch feature/exemplo-rmSeuRM
+```
+
+2. Baixe as atualizações do servidor:
+```bash
+git fetch origin
+```
+
+3. Traga o código do professor para dentro da sua branch:
+```bash
+git merge origin/feature/exemplo-pf0670
+```
+
+---
+
+### 3. Sua branch deu erro/conflito e você quer descartar tudo e ficar idêntico ao professor
+*(Para quem perdeu a aula, quebrou o código ou quer zerar o ambiente com o código oficial do professor)*
+
+1. Acesse a sua branch:
+```bash
+git switch feature/exemplo-rmSeuRM
+```
+
+2. Baixe os dados atualizados:
+```bash
+git fetch origin
+```
+
+3. Force a sua branch a ficar exatamente igual à do professor:
+```bash
+git reset --hard origin/feature/exemplo-pf0670
+```
+
+> **Atenção:** O comando `git reset --hard` apaga qualquer alteração local não sincronizada e alinha tudo 100% com a branch do professor.
+
+---
+
+----
+=============================
+----
+
+-------------------------------------------------------------------
+INSTALANDO E CONFIGURANDO ROTAS NO PROJETO
+-------------------------------------------------------------------
+## 1. Instalar os pacotes
+
+Execute no terminal:
+```bash
+npm install react-router
+```
+---
+
+## 2. Criar a pasta de rotas
+
+Crie a pasta `routes` dentro de `src`:
+
+```text
+src/
+└── routes/
+```
+---
+
+## 3. Criar os componentes de rota
+
+Adote o seguinte padrão dentro de `src/routes`:
+* O nome da subpasta será o nome do componente (ex: `/Produtos`);
+* O arquivo do componente sempre se chamará `index.tsx`;
+* A função exportada terá o mesmo nome da subpasta: `export default function NomeDaPasta() { ... }`.
+
+Rotas a serem criadas:
+* `src/routes/Home/index.tsx`
+* `src/routes/Produtos/index.tsx`
+* `src/routes/EditarProdutos/index.tsx`
+* `src/routes/Error/index.tsx`
+
+---
+
+## 4 e 5. Importar recursos no `main.tsx`
+
+No arquivo `src/main.tsx`, importe os componentes criados e os utilitários de roteamento:
+
+```tsx
+import { createBrowserRouter, RouterProvider } from 'react-router'
+
+import App from './App'
+import Home from './routes/Home'
+import Produtos from './routes/Produtos'
+import EditarProdutos from './routes/EditarProdutos'
+import Error from './routes/Error'
+```
+
+---
+
+## 6. Configurar a árvore de rotas
+
+Defina a constante `router` utilizando `createBrowserRouter`:
+
+```tsx
+const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <App />,
+    errorElement: <Error />,
+    children: [
+      { path: '/', element: <Home /> },
+      { path: '/produtos', element: <Produtos /> },
+      { path: '/editar-produtos', element: <EditarProdutos /> }
+    ]
+  }
+])
+```
+
+---
+
+## 7. Atualizar a renderização no `main.tsx`
+
+Substitua `<App />` diretamente por `<RouterProvider router={router} />`:
+
+```tsx
+createRoot(document.getElementById('root')!).render(
+  <StrictMode>
+    <RouterProvider router={router} />
+  </StrictMode>
+)
+```
+
+---
+
+## 8. Ajustar o layout no `App.tsx`
+
+No componente `App.tsx`, substitua o conteúdo estático pelo componente `<Outlet />`:
+
+```tsx
+import { Outlet } from 'react-router'
+import Cabecalho from './components/Cabecalho'
+import Rodape from './components/Rodape'
+
+export default function App() {
+  return (
+    <>
+      <Cabecalho />
+      <Outlet />
+      <Rodape />
+    </>
+  )
+}
+```
+
+---
+
+## 9. Testar rotas no navegador
+
+Acesse diretamente pela URL para validar a navegação:
+* `http://localhost:5173/`
+* `http://localhost:5173/produtos`
+* `http://localhost:5173/editar-produtos`
+
+> **Nota:** O cabeçalho e o rodapé permanecem estáticos na tela; apenas a área do `<Outlet />` é atualizada.
+
+---
+
+## 10. Criar o componente `<Menu />`
+
+Crie o componente de navegação usando `<Link>` e insira-o dentro do `<Cabecalho />`:
+
+```tsx
+import { Link } from 'react-router'
+
+export default function Menu() {
+  return (
+    <nav>
+      <ul>
+        <li><Link to="/">Home</Link></li>
+        <li><Link to="/produtos">Produtos</Link></li>
+        <li><Link to="/editar-produtos">Editar Produtos</Link></li>
+      </ul>
+    </nav>
+  )
+}
+```
+
+
+
+
+# useEffect: O hook que controla a rerenderização!!
+
+Neste guia, vamos aprender como reagir a mudanças no seu projeto utilizando ganchos (**Hooks**):
+
+* **O que é o `useEffect`?**  
+  O `useEffect` é um hook nativo do React que atua como um observador. Ele serve para disparar ações secundárias (efeitos colaterais) sempre que algo muda ou quando um componente precisa se re-renderizar, sem interferir diretamente no fluxo visual da tela.
+
+* **O que é o `useLocation`?**  
+  O `useLocation` também é um hook, mas fornecido pelo `react-router`. Ele atua como uma antena que lê em tempo real os dados da URL atual da aplicação (caminho, parâmetros e estado).
+
+Ao juntar os dois, criamos uma rotina automática que reage toda vez que o usuário navega por uma rota.
+
+---
+
+### Passo 1: Criar o Componente Observador de Rota
+
+Crie o arquivo `src/components/ObservadorDeRota.tsx`:
+
+```tsx
+import { useEffect } from 'react';
+import { useLocation } from 'react-router';
+
+export default function ObservadorDeRota() {
+  const location = useLocation();
+
+  useEffect(() => {
+    // 1. Exibe a rota acessada no console
+    console.log(`Rota acessada: ${location.pathname}`);
+
+    // 2. Altera o título da aba do navegador
+    document.title = `Aplicação | ${location.pathname}`;
+
+    // 3. Rola a visualização de volta ao topo
+    window.scrollTo(0, 0);
+
+  }, [location]); // Dependência que dispara o hook
+
+  return null;
+}
+```
+
+> **Explicação do Passo 1:**
+> * `useLocation()`: Ativa a leitura do endereço da aplicação e guarda em `location`.
+> * `useEffect(..., [location])`: O hook fica vigiando o valor de `location`. Se ele mudar, o código dentro da função roda imediatamente.
+> * `return null`: O componente executa apenas tarefas de lógica e não adiciona elementos visuais ao HTML.
+
+---
+
+### Passo 2: Importar e Adicionar no `App.tsx`
+
+Abra o arquivo `src/App.tsx` e coloque o observador no topo da estrutura:
+
+```tsx
+import { Outlet } from 'react-router';
+import Cabecalho from './components/Cabecalho';
+import Rodape from './components/Rodape';
+import ObservadorDeRota from './components/ObservadorDeRota';
+
+export default function App() {
+  return (
+    <>
+      <ObservadorDeRota />
+      <Cabecalho />
+      <Outlet />
+      <Rodape />
+    </>
+  );
+}
+```
+
+----
+=============================
+----
+
+
+# useEffect: O hook que controla a rerenderização!!
+
+Neste guia, vamos aprender como reagir a mudanças no seu projeto utilizando ganchos (**Hooks**):
+
+* **O que é o `useEffect`?**  
+  O `useEffect` é um hook nativo do React que atua como um observador. Ele serve para disparar ações secundárias (efeitos colaterais) sempre que algo muda ou quando um componente precisa se re-renderizar, sem interferir diretamente no fluxo visual da tela.
+
+* **O que é o `useLocation`?**  
+  O `useLocation` também é um hook, mas fornecido pelo `react-router`. Ele atua como uma antena que lê em tempo real os dados da URL atual da aplicação (caminho, parâmetros e estado).
+
+Ao juntar os dois, criamos uma rotina automática que reage toda vez que o usuário navega por uma rota.
+
+---
+
+### Passo 1: Criar o Componente Observador de Rota
+
+Crie o arquivo `src/components/ObservadorDeRota.tsx`:
+
+```tsx
+import { useEffect } from 'react';
+import { useLocation } from 'react-router';
+
+export default function ObservadorDeRota() {
+  const location = useLocation();
+
+  useEffect(() => {
+    // 1. Exibe a rota acessada no console
+    console.log(`Rota acessada: ${location.pathname}`);
+
+    // 2. Altera o título da aba do navegador
+    document.title = `Aplicação | ${location.pathname}`;
+
+    // 3. Rola a visualização de volta ao topo
+    window.scrollTo(0, 0);
+
+  }, [location]); // Dependência que dispara o hook
+
+  return null;
+}
+```
+
+> **Explicação do Passo 1:**
+> * `useLocation()`: Ativa a leitura do endereço da aplicação e guarda em `location`.
+> * `useEffect(..., [location])`: O hook fica vigiando o valor de `location`. Se ele mudar, o código dentro da função roda imediatamente.
+> * `return null`: O componente executa apenas tarefas de lógica e não adiciona elementos visuais ao HTML.
+
+---
+
+### Passo 2: Importar e Adicionar no `App.tsx`
+
+Abra o arquivo `src/App.tsx` e coloque o observador no topo da estrutura:
+
+```tsx
+import { Outlet } from 'react-router';
+import Cabecalho from './components/Cabecalho';
+import Rodape from './components/Rodape';
+import ObservadorDeRota from './components/ObservadorDeRota';
+
+export default function App() {
+  return (
+    <>
+      <ObservadorDeRota />
+      <Cabecalho />
+      <Outlet />
+      <Rodape />
+    </>
+  );
+}
+```
+
+> **Explicação do Passo 2:**
+> * Colocar o `<ObservadorDeRota />` dentro de `App.tsx` garante que o monitoramento fique ativo em toda a aplicação.
+> * O `<Outlet />` continua cuidando da troca das páginas filhas enquanto o observador atua em segundo plano.
+
+---
+
+### Passo 3: Por que o Observador Funciona se o `App` não Muda?
+
+> **Explicação do Passo 3:**
+> 1. O `<RouterProvider>` compartilha o estado da rota com toda a árvore via Context API do React.
+> 2. O hook `useLocation` conecta o `ObservadorDeRota` diretamente a esse canal.
+> 3. Quando a rota muda, o React não precisa recarregar o `<App />` inteiro: ele atualiza apenas os componentes que usam hooks inscritos nessa alteração, re-executando o `useEffect`.
+
+---
+
+### Passo 4: Testar no Navegador
+
+Execute `npm run dev` e valide o fluxo:
+
+1. Abra o navegador e o console (`F12`).
+2. Clique nos links do menu para alternar entre as rotas.
+3. Verifique o console exibindo o novo caminho e a aba do navegador alterando o texto.
+
+> **Explicação do Passo 4:**
+> Esse teste confirma que o hook `useEffect` identificou a alteração disparada pelo `useLocation` e concluiu as ações com sucesso.
+
+
+----
+=============================
+----
+
 # Aula — 3 de setembro de 2026
 # Exercício — Lâmpada: variável comum versus `useState`
 
@@ -352,176 +816,6 @@ Publique as alterações:
 ```bash
 git push
 ```
----
-
 
 git push
-```
-
-
----
-
-Aula-04/09/2026 - USE-STATE
-
-1 - git clone endereço remoto do repositório
-
-2 - Acessar a pasta do repositório e verificar a branch atual com o comando git branch
-
-3 - Se a branch for main, rode o git flow init, caso a branch seja develop, rode git switch main e depois rode git flow init.
-Obs: Se estiver nas máquinas da instituição de ensino é necessário realizar a instalação do GitFlow através da seguinte linha de comando.
-//Instalação do GITFLOW no WINDOWS
-winget install GitTower.GitFlowNext
-
-4 - Após rodar o git-flow, você deve fazer com o terminal local reconheça as branchs remotas, rode o comando git branch -a, uma listagem acontece, vá até o final deste e quando aparecer o END(só aparece end no caso do gitbash), pressione a tecla Q.
-
-5 - Agora você consegue acessar sua branch, rode o comando git switch nomeDaSuaBranch Ex: feature/exemplo-rm666999
-
-6 - Estando em sua branch, acesse a pasta  my-app que foi criada na tarefa da aula do dia 02/09/2026, rode o comando cd my-app.
-
-7 - Agora podemos acessar o VSCode, rode o comando code . e depois pode fechar o gitbash.
-
-8 - No VSCode, abra um terminal, de preferência um que seja o CMD por causa da compatibilidade com o JS, verifique se realmente está na pasta my-app, se estiver rode o comando npm i ou npm install para baixar as dependências do projeto.
-
-9 - Agora podemos colocar o projeto no AR em modo de desenvolvimento,  rodando o comando npm run dev, neste momento o terminal fica travado, utilize os atalhos disponiveis neste terminal.
-
-10 - Abra um novo terminal para ficar disponível para novas tarefas.
-
--------------------------------------------------------------------
-INSTALANDO E CONFIGURANDO ROTAS NO PROJETO
--------------------------------------------------------------------
-## 1. Instalar os pacotes
-
-Execute no terminal:
-```bash
-npm install react-router
-```
----
-
-## 2. Criar a pasta de rotas
-
-Crie a pasta `routes` dentro de `src`:
-
-```text
-src/
-└── routes/
-```
----
-
-## 3. Criar os componentes de rota
-
-Adote o seguinte padrão dentro de `src/routes`:
-* O nome da subpasta será o nome do componente (ex: `/Produtos`);
-* O arquivo do componente sempre se chamará `index.tsx`;
-* A função exportada terá o mesmo nome da subpasta: `export default function NomeDaPasta() { ... }`.
-
-Rotas a serem criadas:
-* `src/routes/Home/index.tsx`
-* `src/routes/Produtos/index.tsx`
-* `src/routes/EditarProdutos/index.tsx`
-* `src/routes/Error/index.tsx`
-
----
-
-## 4 e 5. Importar recursos no `main.tsx`
-
-No arquivo `src/main.tsx`, importe os componentes criados e os utilitários de roteamento:
-
-```tsx
-import { createBrowserRouter, RouterProvider } from 'react-router'
-
-import App from './App'
-import Home from './routes/Home'
-import Produtos from './routes/Produtos'
-import EditarProdutos from './routes/EditarProdutos'
-import Error from './routes/Error'
-```
-
----
-
-## 6. Configurar a árvore de rotas
-
-Defina a constante `router` utilizando `createBrowserRouter`:
-
-```tsx
-const router = createBrowserRouter([
-  {
-    path: '/',
-    element: <App />,
-    errorElement: <Error />,
-    children: [
-      { path: '/', element: <Home /> },
-      { path: '/produtos', element: <Produtos /> },
-      { path: '/editar-produtos', element: <EditarProdutos /> }
-    ]
-  }
-])
-```
-
----
-
-## 7. Atualizar a renderização no `main.tsx`
-
-Substitua `<App />` diretamente por `<RouterProvider router={router} />`:
-
-```tsx
-createRoot(document.getElementById('root')!).render(
-  <StrictMode>
-    <RouterProvider router={router} />
-  </StrictMode>
-)
-```
-
----
-
-## 8. Ajustar o layout no `App.tsx`
-
-No componente `App.tsx`, substitua o conteúdo estático pelo componente `<Outlet />`:
-
-```tsx
-import { Outlet } from 'react-router'
-import Cabecalho from './components/Cabecalho'
-import Rodape from './components/Rodape'
-
-export default function App() {
-  return (
-    <>
-      <Cabecalho />
-      <Outlet />
-      <Rodape />
-    </>
-  )
-}
-```
-
----
-
-## 9. Testar rotas no navegador
-
-Acesse diretamente pela URL para validar a navegação:
-* `http://localhost:5173/`
-* `http://localhost:5173/produtos`
-* `http://localhost:5173/editar-produtos`
-
-> **Nota:** O cabeçalho e o rodapé permanecem estáticos na tela; apenas a área do `<Outlet />` é atualizada.
-
----
-
-## 10. Criar o componente `<Menu />`
-
-Crie o componente de navegação usando `<Link>` e insira-o dentro do `<Cabecalho />`:
-
-```tsx
-import { Link } from 'react-router'
-
-export default function Menu() {
-  return (
-    <nav>
-      <ul>
-        <li><Link to="/">Home</Link></li>
-        <li><Link to="/produtos">Produtos</Link></li>
-        <li><Link to="/editar-produtos">Editar Produtos</Link></li>
-      </ul>
-    </nav>
-  )
-}
 ```
