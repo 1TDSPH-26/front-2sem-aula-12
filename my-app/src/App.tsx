@@ -1,6 +1,4 @@
-import Cabecalho from "./components/Cabecalho/Cabecalho";
-import Conteudo from "./components/Conteudo/Conteudo";
-import Rodape from "./components/Rodape/Rodape";
+import { Outlet } from "react-router";
 
 export default function App() {
 
@@ -8,9 +6,7 @@ export default function App() {
   return (
 
     <div>
-      <Cabecalho />
-      <Conteudo />
-      <Rodape />
+      <Outlet/>
     </div>
   )
 }
