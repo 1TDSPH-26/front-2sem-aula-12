@@ -1,7 +1,10 @@
 export default function Produtos() {
-  return (
-    <div>
-      <h1>Produtos</h1>
-    </div>
-  );
+
+    document.title = "Produtos";
+
+    return (
+        <main>
+            <h2>Produtos</h2>
+        </main>
+    )
 }

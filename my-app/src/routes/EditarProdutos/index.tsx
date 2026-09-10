@@ -1,7 +1,10 @@
 export default function EditarProdutos() {
-  return (
-    <div>
-      <h1>Editar Produtos</h1>
-    </div>
-  );
+
+    document.title = "Editar Produtos";
+
+    return (
+        <main>
+            <h2>Editar Produtos</h2>
+        </main>
+    )
 }

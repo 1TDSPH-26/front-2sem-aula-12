@@ -1,7 +1,10 @@
 export default function Error() {
-  return (
-    <div>
-      <h1>Página não encontrada</h1>
-    </div>
-  );
+
+    document.title = "Error - 404";
+    
+    return (
+        <main>
+            <h2>404 - Not Found</h2>
+        </main>
+    )
 }
